@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+message: "If you use this software in your research, please cite it as below."
+title: "An LLM-Powered Companion for Reducing Dysfunctional Feedback in Online PjBL"
+version: 1.0.0
+date-released: 2026-01-06
+
+authors:
+  - family-names: Kerrouche
+    given-names: Amal
+  - family-names: Ouared
+    given-names: Abdelkader
+  - family-names: Chadli
+    given-names: Abdelhafidh
+
+repository-code: "https://github.com/amal-phd/PjBL-feedback"
+
+abstract: >
+  Project-Based Learning (PjBL) is widely used to foster technical and collaborative
+  skills in higher education. However, teamwork in fully online environments often
+  suffers from dysfunctional dynamics. Impulsive comments, non-constructive criticism,
+  biased judgments, and rejection of feedback can generate destructive interactions
+  and negatively affect project outcomes. This paper proposes Feed-Safe, a Large
+  Language Model (LLM)-based approach for detecting and analyzing negative feedback
+  in PjBL settings. The proposed model integrates motivational, communicative, and
+  psychological safety factors to identify dysfunctional feedback patterns and
+  support constructive regulation during collaborative work. Experiments conducted
+  on a dedicated dataset show that the proposed approach reduces false and negatively
+  relevant feedback, thereby improving communication quality, team cohesion, and
+  overall learning performance. The results demonstrate the potential of language
+  models to regulate feedback processes and mitigate dysfunctional team behaviors
+  in online project-based learning environments.
+
+keywords:
+  - Online Project-Based Learning
+  - Large Language Models
+  - Negative Feedback Detection
+  - Team Collaboration
+  - Psychological Safety
+
+license: MIT
+
