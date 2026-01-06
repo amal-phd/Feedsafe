@@ -15,9 +15,9 @@ The objective is to support research on **collaborative learning, feedback dynam
 ## Project Structure
 
 pjbl-feedback-analyzer/
-├── agent/ # Core analysis logic and agents
-├── scripts/ # Model training and evaluation scripts
-├── UI/ # User interface (prototype/demo)
-├── figures/ # Figures used in experiments and paper
-├── requirements.txt # Python dependencies
-└── README.md
+├── agent/ # Core analysis logic and agents/
+├── scripts/ # Model training and evaluation scripts/
+├── UI/ # User interface (prototype/demo)/
+├── figures/ # Figures used in experiments and paper/
+├── requirements.txt # Python dependencies/
+└── README.md/
