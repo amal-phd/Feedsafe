@@ -1,89 +1,257 @@
-# PJBL Feedback Analyzer
+PJBL Feedback Analyzer
 
-🔗 **Online Demo:** https://pjbl-feedback.online/
+🔗 Online Demo: https://pjbl-feedback.online/
 
-This repository contains the implementation of a **Project-Based Learning (PjBL) feedback analysis system** designed to analyze interaction messages exchanged within student project teams.
+Overview
 
-The system automatically detects:
-- **Feedback category** (e.g., task-related, coordination, evaluation)
-- **Feedback type** (positive, negative, neutral)
-- **Feedback intent** (suggestion, critique, encouragement, clarification, etc.)
+This repository provides a research-oriented implementation of a feedback analysis system for Project-Based Learning (PjBL) environments.
+The system is designed to analyze interaction messages exchanged within student project teams in online and blended learning contexts.
 
-The objective is to support research on **collaborative learning, feedback dynamics, and learner regulation** by providing a reproducible analysis framework.
+Feedback analysis is formalized as a set of supervised natural language classification tasks, enabling the automatic identification of multiple complementary dimensions of feedback.
+The repository is intended to support empirical research, methodological transparency, and reproducible experimentation in learning analytics and educational AI.
 
----
+Feedback Analysis Tasks
 
-## Project Structure
+Each interaction message is analyzed along three independent dimensions:
 
-pjbl-feedback-analyzer/
-├── agent/              # Core analysis logic and agents
-├── scripts/            # Model training and evaluation scripts
-├── UI/                 # User interface (prototype/demo)
-├── models/             # Generated model storage (created during training)
-├── requirements.txt    # Python dependencies
-└── README.md           # This file
+1. Feedback Category
 
+Multi-class classification into one of the following categories:
 
----
+work_evaluation
 
----
+revision_request
 
-⚡ Quick Start
+task_coordination
+
+deadline_management
+
+idea_proposal
+
+clarification_request
+
+decision_assertion
+
+social_interaction
+
+others
+
+2. Feedback Type
+
+positive
+
+negative
+
+neutral
+
+3. Feedback Intent
+
+constructive
+
+harmful
+
+neutral
+
+These dimensions are modeled independently to preserve analytical interpretability and support fine-grained research analysis.
+
+Research Objectives
+
+The primary objective of this project is to support research on:
+
+Collaborative learning processes in PjBL settings
+
+Feedback dynamics within student teams
+
+Learner regulation and interaction quality
+
+Hybrid AI systems combining statistical models and symbolic rules
+
+The system is designed with a strong emphasis on reproducibility, explainability, and controlled decision logic, making it suitable for experimental validation and extension.
+
+System Architecture
+
+The system follows a hybrid, modular, layered architecture, allowing each component to be evaluated or reused independently.
+
+Layered Design
+1. Dataset Layer
+
+Structured interaction messages stored in JSONL format
+
+One message per line
+
+Fixed and reproducible train/validation/test splits
+
+2. Model Layer
+
+Three independently trained DeBERTa-based classifiers
+
+One classifier per analytical dimension:
+
+Feedback type
+
+Feedback category
+
+Feedback intent
+
+Identical preprocessing and encoder architecture across tasks
+
+3. Decision Layer (Agent + Rules)
+
+A hybrid inference layer combining:
+
+Statistical predictions from the trained classifiers
+
+Explicit rule-based logic encoding domain knowledge and safety constraints
+
+This layer is responsible for:
+
+Aggregating model outputs
+
+Interpreting combinations of predictions
+
+Flagging potentially problematic feedback
+
+Ensuring controlled and explainable decision-making
+
+4. UI Layer
+
+A Streamlit-based interface
+
+Directly connected to the decision layer
+
+Enables interactive, message-level analysis for research and demonstration purposes
+
+Project Structure
+pjbl-feedback/
+├── data/
+│   ├── clean_dataset_pjbl_feedback.jsonl   # Cleaned dataset (JSONL)
+│   └── splits/
+│       ├── train.jsonl
+│       ├── valid.jsonl
+│       └── test.jsonl
+│
+├── src/
+│   ├── split_dataset.py        # Dataset splitting (JSONL)
+│   └── train_all_tasks.py      # Unified training script (3 tasks)
+│
+├── agent/                      # Decision layer (models + rules)
+├── UI/                         # Streamlit interface (connected to agent)
+│
+├── models/                     # Trained model checkpoints (generated locally)
+├── requirements.txt            # Python dependencies
+└── README.md                   # Project documentation
+
 Installation
 
-    Clone the repository:
-
-bash
+Clone the repository:
 
 git clone https://github.com/amal-phd/PjBL-feedback.git
-cd pjbl-feedback-analyzer
+cd PjBL-feedback
 
-    Install dependencies:
 
-bash
+Create and activate a virtual environment (recommended):
 
-pip install -r requirements.txt
+python -m venv .venv
+source .venv/bin/activate      # Linux / macOS
+.venv\Scripts\Activate.ps1     # Windows
 
-    Run the demo application:
 
-bash
+Install dependencies:
 
-cd UI
-streamlit run UI/app.py    
+python -m pip install -r requirements.txt
 
-🤖 Models
-Model Availability
+Running the System (UI + Agent)
 
-Trained models are not included in this repository due to size constraints. However, you can easily regenerate them using the provided training scripts.
-Reproducing the Models
+The repository includes a Streamlit-based research prototype directly connected to the decision layer.
 
-All models can be reproduced using the training scripts in the scripts/ directory. Executing these scripts will automatically generate the models locally under a models/ directory.
-bash
+Execution Flow
 
-# Train all models sequentially
-python scripts/train_feedback_category_synth.py
-python scripts/train_feedback_type_synth.py
-python scripts/train_feedback_intent_synth.py
+The user submits a feedback message via the UI
 
-🔬 Research Context
+The agent performs inference using the trained classifiers
 
-This project is developed as part of academic research on:
+Model predictions are combined with rule-based decision logic
 
-Project-Based Learning in higher education
+The structured analysis is returned to the UI
+
+Run the system from the project root:
+
+streamlit run UI/app.py
+
+Dataset Preparation
+
+All data handling is performed in JSONL format.
+
+To generate reproducible train/validation/test splits:
+
+python src/split_dataset.py
+
+
+This produces:
+
+data/splits/
+├── train.jsonl
+├── valid.jsonl
+└── test.jsonl
+
+Model Training
+
+Three classifiers are trained independently, each formulated as a sequence classification task using the same encoder architecture (DeBERTa-v3) and consistent preprocessing.
+
+Run the unified training script:
+
+python src/train_all_tasks.py
+
+
+This script sequentially trains and saves:
+
+Feedback Type classifier
+
+Feedback Category classifier
+
+Feedback Intent classifier
+
+Generated models are stored locally under:
+
+models/
+├── deberta_feedback_type/
+├── deberta_feedback_category/
+└── deberta_intent/
+
+Reproducibility and Model Availability
+
+Trained model weights are not included due to size constraints
+
+All models can be fully reproduced using the provided scripts
+
+Dataset splits are fixed and deterministic
+
+Preprocessing and training procedures are consistent across tasks
+
+This design supports independent verification and replication of experimental results.
+
+Research Context and Scope
+
+This repository contributes to research on:
+
+Project-Based Learning (PjBL) in higher education
 
 Feedback analysis and learning analytics
 
-Collaborative learning dynamics
+Collaborative learning and group regulation
 
-Learner regulation and metacognition
+Hybrid AI systems combining models and rules
 
-The repository accompanies a research paper and is provided to ensure reproducibility and transparency in educational technology research.
+Communicative and metacognitive aspects of feedback
 
+The repository accompanies an academic publication and is shared to promote open, transparent, and reproducible research.
 
-Data & Code Availability
+Data and Code Availability
 
-Source Code: Fully available in this repository
+Source code: Fully available in this repository
 
-Trained Models: Regenerable using provided scripts (excluded due to storage limits)
+Dataset: Provided in JSONL format
 
-Training Scripts: Fully documented and reproducible
+Models: Regenerable locally using provided scripts
+
+Decision logic: Implemented in the agent layer (models + rules)
