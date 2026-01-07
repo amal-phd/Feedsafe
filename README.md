@@ -160,23 +160,6 @@ Install dependencies:
 
 python -m pip install -r requirements.txt
 
-Running the System (UI + Agent)
-
-The repository includes a Streamlit-based research prototype directly connected to the decision layer.
-
-Execution Flow
-
-The user submits a feedback message via the UI
-
-The agent performs inference using the trained classifiers
-
-Model predictions are combined with rule-based decision logic
-
-The structured analysis is returned to the UI
-
-Run the system from the project root:
-
-streamlit run UI/app.py
 
 Dataset Preparation
 
@@ -227,6 +210,24 @@ All models can be fully reproduced using the provided scripts
 Dataset splits are fixed and deterministic
 
 Preprocessing and training procedures are consistent across tasks
+
+Running the System (UI + Agent)
+
+The repository includes a Streamlit-based research prototype directly connected to the decision layer.
+
+Execution Flow
+
+The user submits a feedback message via the UI
+
+The agent performs inference using the trained classifiers
+
+Model predictions are combined with rule-based decision logic
+
+The structured analysis is returned to the UI
+
+Run the system from the project root:
+
+streamlit run UI/app.py
 
 This design supports independent verification and replication of experimental results.
 
